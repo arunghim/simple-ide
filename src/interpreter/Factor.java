@@ -26,7 +26,8 @@ public class Factor implements ICore {
             isExpr = true;
             expr = new Expr(tokenizer, parser);
             expr.parse();
-            if (tokenizer.getToken() != Types.RIGHT_PAREN) throw new RuntimeException("ERROR: EXPECTED RIGHT PARENTHESIS TOKEN");
+            if (tokenizer.getToken() != Types.RIGHT_PAREN)
+                throw new RuntimeException("ERROR: EXPECTED RIGHT PARENTHESIS TOKEN");
             tokenizer.skipToken();
         } else if (token == Types.INT_CONST) {
             isInt = true;
@@ -44,9 +45,10 @@ public class Factor implements ICore {
         if (isExpr) return expr.execute();
         else if (isInt) return value;
         else if (isId) {
-            Id idManager = Id.getInstance(tokenizer);
+            Id idManager = Id.getInstance(tokenizer, parser);
 
-            if (!idManager.isDeclared(idName)) throw new RuntimeException("ERROR: UNDECLARED IDENTIFIER '" + idName + "'");
+            if (!idManager.isDeclared(idName))
+                throw new RuntimeException("ERROR: UNDECLARED IDENTIFIER '" + idName + "'");
             Integer val = idManager.getValue(idName);
 
             if (val == null) throw new RuntimeException("ERROR: VARIABLE '" + idName + "' USED BEFORE ASSIGNMENT");
@@ -59,10 +61,10 @@ public class Factor implements ICore {
     @Override
     public void print(int indent) {
         if (isExpr) {
-            System.out.print("(");
+            parser.out().print("(");
             expr.print(indent);
-            System.out.print(")");
-        } else if (isInt) System.out.print(value);
-        else if (isId) System.out.print(idName);
+            parser.out().print(")");
+        } else if (isInt) parser.out().print(value);
+        else if (isId) parser.out().print(idName);
     }
 }

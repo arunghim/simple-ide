@@ -50,7 +50,7 @@ public class For implements ICore {
 
     @Override
     public int execute() {
-        for (firstAssign.execute(); cond.execute() != 0; secondAssign.execute()){
+        for (firstAssign.execute(); cond.execute() != 0; secondAssign.execute()) {
             stmtSeq.execute();
         }
 
@@ -61,11 +61,11 @@ public class For implements ICore {
     public void print(int indent) {
         String indentation = " ".repeat(indent);
 
-        System.out.print(indentation + "for (");
+        parser.out().print(indentation + "for (");
         firstAssign.print(0);
         cond.print(0);
-        System.out.println(")");
+        parser.out().println(")");
         stmtSeq.print(indent + 2);
-        System.out.println(indentation + "end;");
+        parser.out().println(indentation + "end;");
     }
 }

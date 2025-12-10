@@ -1,13 +1,18 @@
 package interpreter;
 
+import java.io.PrintStream;
+
 public class Parser {
     private final Tokenizer tokenizer;
     private final String data;
     private Prog prog;
+    private final PrintStream out;
 
-    public Parser(String program, String data) {
+    public Parser(String program, String data, PrintStream out) {
+        Id.reset();
         this.tokenizer = new Tokenizer(program);
         this.data = data;
+        this.out = out;
         build();
     }
 
@@ -18,6 +23,10 @@ public class Parser {
 
     public String data() {
         return data;
+    }
+
+    public PrintStream out() {
+        return out;
     }
 
     public void parse() {

@@ -41,13 +41,13 @@ public class Prog implements ICore {
 
     @Override
     public void print(int indent) {
-        System.out.println();
+        parser.out().println();
         String indentStr = " ".repeat(indent);
-        System.out.println(indentStr + "program");
-        System.out.print(indentStr + "int ");
+        parser.out().println(indentStr + "program");
+        parser.out().print(indentStr + "int ");
         declSeq.print(indent + 1);
-        System.out.println(indentStr + "begin");
+        parser.out().println(indentStr + "begin");
         stmtSeq.print(indent + 1);
-        System.out.println(indentStr + "end");
+        parser.out().println(indentStr + "end");
     }
 }

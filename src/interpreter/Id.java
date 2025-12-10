@@ -6,15 +6,18 @@ public class Id implements ICore {
     private static Id instance;
     private final HashMap<String, Integer> identifiers = new HashMap<>();
     private final Tokenizer tokenizer;
+    private final Parser parser;
+
     private String idName;
 
-    private Id(Tokenizer tokenizer) {
+    private Id(Tokenizer tokenizer, Parser parser) {
         this.tokenizer = tokenizer;
+        this.parser = parser;
     }
 
-    public static Id getInstance(Tokenizer tokenizer) {
+    public static Id getInstance(Tokenizer tokenizer, Parser parser) {
         if (instance == null)
-            instance = new Id(tokenizer);
+            instance = new Id(tokenizer, parser);
         return instance;
     }
 
@@ -27,7 +30,8 @@ public class Id implements ICore {
                 declare(idName);
                 tokenizer.skipToken();
             } else if (tokenizer.getToken() == Types.COMMA) tokenizer.skipToken();
-            else throw new RuntimeException("ERROR: Unexpected token '" + tokenizer.getToken() + "' in identifier list.");
+            else
+                throw new RuntimeException("ERROR: Unexpected token '" + tokenizer.getToken() + "' in identifier list.");
         }
 
         tokenizer.skipToken();
@@ -35,14 +39,15 @@ public class Id implements ICore {
 
     @Override
     public int execute() {
-        if (!identifiers.containsKey(idName)) throw new RuntimeException("ERROR: Undeclared identifier '" + idName + "'");
+        if (!identifiers.containsKey(idName))
+            throw new RuntimeException("ERROR: Undeclared identifier '" + idName + "'");
 
         return identifiers.get(idName);
     }
 
     @Override
     public void print(int indent) {
-        System.out.print(idName);
+        parser.out().print(idName);
     }
 
     public void declare(String name) {
@@ -62,5 +67,9 @@ public class Id implements ICore {
 
     public boolean isDeclared(String name) {
         return identifiers.containsKey(name);
+    }
+
+    public static void reset() {
+        instance = null;
     }
 }
