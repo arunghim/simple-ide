@@ -45,11 +45,11 @@ public class Comp implements ICore {
     public void print(int indent) {
         leftExpr.print(0);
         switch (opToken) {
-            case Types.EQUALS -> System.out.print(" == ");
-            case Types.LESS -> System.out.print(" < ");
-            case Types.GREATER -> System.out.print(" > ");
-            case Types.LESS_EQUAL -> System.out.print(" <= ");
-            case Types.GREATER_EQUAL -> System.out.print(" >= ");
+            case Types.EQUALS -> parser.out().print(" == ");
+            case Types.LESS -> parser.out().print(" < ");
+            case Types.GREATER -> parser.out().print(" > ");
+            case Types.LESS_EQUAL -> parser.out().print(" <= ");
+            case Types.GREATER_EQUAL -> parser.out().print(" >= ");
             default -> throw new RuntimeException("ERROR: UNKNOWN COMPARISON TOKEN");
         }
         rightExpr.print(0);

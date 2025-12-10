@@ -35,12 +35,13 @@ public class Stmt implements ICore {
             Assign coreAssign = new Assign(tokenizer, parser);
             coreAssign.parse();
             stmt = coreAssign;
-        } else if(token == Types.FOR){
+        } else if (token == Types.FOR) {
             For codeFor = new For(tokenizer, parser);
             codeFor.parse();
             stmt = codeFor;
         } else {
-            if (tokenizer.getToken() != Types.EOF || tokenizer.getToken() != Types.ELSE) throw new RuntimeException("ERROR: INVALID STATEMENT TOKEN");
+            if (tokenizer.getToken() != Types.EOF || tokenizer.getToken() != Types.ELSE)
+                throw new RuntimeException("ERROR: INVALID STATEMENT TOKEN");
         }
     }
 
@@ -54,7 +55,7 @@ public class Stmt implements ICore {
     public void print(int indent) {
         if (!stmt.equals(codeReadSeq)) stmt.print(indent + 2);
         else {
-            System.out.print(" ".repeat(indent + 2) + "read ");
+            parser.out().print(" ".repeat(indent + 2) + "read ");
             stmt.print(indent + 2);
         }
     }

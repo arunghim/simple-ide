@@ -40,7 +40,7 @@ public class Assign implements ICore {
     public int execute() {
         int value = expr.execute();
 
-        Id idManager = Id.getInstance(tokenizer);
+        Id idManager = Id.getInstance(tokenizer, parser);
         if (!idManager.isDeclared(idName)) throw new RuntimeException("ERROR: ID '" + idName + "' NOT DECLARED");
 
         idManager.setValue(idName, value);
@@ -50,8 +50,8 @@ public class Assign implements ICore {
     @Override
     public void print(int indent) {
         String indentation = " ".repeat(indent);
-        System.out.print(indentation + idName + " = ");
+        parser.out().print(indentation + idName + " = ");
         expr.print(0);
-        System.out.println(";");
+        parser.out().println(";");
     }
 }

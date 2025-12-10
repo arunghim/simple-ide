@@ -17,7 +17,7 @@ public class DeclSeq implements ICore {
     public void parse() {
         if (tokenizer.getToken() == Types.INT) tokenizer.skipToken();
 
-        decl = new Decl(tokenizer);
+        decl = new Decl(tokenizer, parser);
         decl.parse();
 
         if (tokenizer.getToken() == Types.COMMA) {
@@ -48,8 +48,10 @@ public class DeclSeq implements ICore {
     public void print(int indent) {
         decl.print(0);
         if (hasDeclSeq) {
-            System.out.print(", ");
+            parser.out().print(", ");
             declSeq.print(0);
-        } else System.out.println(";");
+        } else {
+            parser.out().println(";");
+        }
     }
 }

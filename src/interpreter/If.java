@@ -34,7 +34,8 @@ public class If implements ICore {
         if (tokenizer.getToken() != Types.END) throw new RuntimeException("ERROR: END-IF TOKEN EXPECTED");
         tokenizer.skipToken();
 
-        if (tokenizer.getToken() != Types.SEMICOLON) throw new RuntimeException("ERROR: SEMICOLON AFTER END-IF EXPECTED");
+        if (tokenizer.getToken() != Types.SEMICOLON)
+            throw new RuntimeException("ERROR: SEMICOLON AFTER END-IF EXPECTED");
         tokenizer.skipToken();
     }
 
@@ -51,14 +52,14 @@ public class If implements ICore {
     @Override
     public void print(int indent) {
         String indentation = " ".repeat(indent);
-        System.out.print(indentation + "if (");
+        parser.out().print(indentation + "if (");
         cond.print(0);
-        System.out.println(") then");
+        parser.out().println(") then");
         ifSeq.print(indent + 2);
         if (hasAlt) {
-            System.out.println(indentation + "else");
+            parser.out().println(indentation + "else");
             elseSeq.print(indent + 2);
         }
-        System.out.println(indentation + "end;");
+        parser.out().println(indentation + "end;");
     }
 }

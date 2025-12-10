@@ -53,15 +53,9 @@ public class Term implements ICore {
 
         if (term != null) {
             switch (opToken) {
-                case Types.MULT:
-                    System.out.print(" * ");
-                    break;
-                case Types.DIV:
-                    System.out.print(" / ");
-                    break;
-                case Types.EXP:
-                    System.out.print(" ^ ");
-                    break;
+                case Types.MULT -> parser.out().print(" * ");
+                case Types.DIV -> parser.out().print(" / ");
+                case Types.EXP -> parser.out().print(" ^ ");
             }
             term.print(indent);
         }

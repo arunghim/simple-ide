@@ -34,7 +34,8 @@ public class Cond implements ICore {
                 }
             }
 
-            if (tokenizer.getToken() != Types.RIGHT_PAREN) throw new RuntimeException("ERROR: RIGHT PARENTHESIS TOKEN EXPECTED");
+            if (tokenizer.getToken() != Types.RIGHT_PAREN)
+                throw new RuntimeException("ERROR: RIGHT PARENTHESIS TOKEN EXPECTED");
             tokenizer.skipToken();
         } else {
             comp = new Comp(tokenizer, parser);
@@ -57,21 +58,21 @@ public class Cond implements ICore {
     @Override
     public void print(int indent) {
         if (opToken == Types.EXCLAMATION) {
-            System.out.print("!(");
+            parser.out().print("!(");
             leftCond.print(0);
-            System.out.print(")");
+            parser.out().print(")");
         } else if (opToken == Types.AND) {
-            System.out.print("(");
+            parser.out().print("(");
             leftCond.print(0);
-            System.out.print(" && ");
+            parser.out().print(" && ");
             rightCond.print(0);
-            System.out.print(")");
+            parser.out().print(")");
         } else if (opToken == Types.OR) {
-            System.out.print("(");
+            parser.out().print("(");
             leftCond.print(0);
-            System.out.print(" || ");
+            parser.out().print(" || ");
             rightCond.print(0);
-            System.out.print(")");
+            parser.out().print(")");
         } else {
             if (comp != null) comp.print(0);
             else leftCond.print(indent);
