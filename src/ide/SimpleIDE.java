@@ -96,15 +96,16 @@ public class SimpleIDE extends Application {
         codeEditor = new TextArea();
         codeEditor.getStyleClass().add("editor-area");
         codeEditor.setWrapText(false);
+        codeEditor.setEditable(false);
+        codeTabLabel = new Label("");
+        codeTabLabel.getStyleClass().add("tab-label");
+        codeTabLabel.setVisible(false);
         codeEditor.textProperty().addListener((o, oldV, newV) -> {
             if (selectedCodeFile != null) {
                 codeFiles.put(selectedCodeFile, newV);
                 updateButtonStates();
             }
         });
-
-        codeTabLabel = new Label("");
-        codeTabLabel.getStyleClass().add("tab-label");
 
         VBox codeBox = new VBox();
         codeBox.getStyleClass().add("editor-container");
@@ -115,14 +116,15 @@ public class SimpleIDE extends Application {
         dataEditor = new TextArea();
         dataEditor.getStyleClass().add("editor-area");
         dataEditor.setWrapText(false);
+        dataEditor.setEditable(false);
+        dataTabLabel = new Label("");
+        dataTabLabel.getStyleClass().add("tab-label");
+        dataTabLabel.setVisible(false);
         dataEditor.textProperty().addListener((o, oldV, newV) -> {
             if (selectedDataFile != null) {
                 dataFiles.put(selectedDataFile, newV);
             }
         });
-
-        dataTabLabel = new Label("");
-        dataTabLabel.getStyleClass().add("tab-label");
 
         VBox dataBox = new VBox();
         dataBox.getStyleClass().add("editor-container");
@@ -206,32 +208,44 @@ public class SimpleIDE extends Application {
     }
 
     private void selectCodeFile(String name) {
-        if (name == null) return;
+        if (name == null) {
+            selectedCodeFile = null;
+            codeEditor.clear();
+            codeEditor.setEditable(false);
+            codeTabLabel.setVisible(false);
+            return;
+        }
         String key = name.trim().toUpperCase();
         if (!codeFiles.containsKey(key)) return;
-
         if (selectedCodeFile != null) {
             codeFiles.put(selectedCodeFile, codeEditor.getText());
         }
-
         selectedCodeFile = key;
         codeEditor.setText(codeFiles.get(key));
+        codeEditor.setEditable(true);
         codeTabLabel.setText(key);
+        codeTabLabel.setVisible(true);
         updateButtonStates();
     }
 
     private void selectDataFile(String name) {
-        if (name == null) return;
+        if (name == null) {
+            selectedDataFile = null;
+            dataEditor.clear();
+            dataEditor.setEditable(false);
+            dataTabLabel.setVisible(false);
+            return;
+        }
         String key = name.trim().toUpperCase();
         if (!dataFiles.containsKey(key)) return;
-
         if (selectedDataFile != null) {
             dataFiles.put(selectedDataFile, dataEditor.getText());
         }
-
         selectedDataFile = key;
         dataEditor.setText(dataFiles.get(key));
+        dataEditor.setEditable(true);
         dataTabLabel.setText(key);
+        dataTabLabel.setVisible(true);
     }
 
     private void refreshExplorer() {
@@ -253,7 +267,7 @@ public class SimpleIDE extends Application {
     }
 
     private void promptNewCodeFile() {
-        TextInputDialog d = new TextInputDialog("PROGRAM" + (codeFiles.size() + 1));
+        TextInputDialog d = new TextInputDialog("PROGRAM " + (codeFiles.size() + 1));
         d.setTitle("New Code File");
         d.setHeaderText(null);
         d.setContentText("File name:");
@@ -268,7 +282,7 @@ public class SimpleIDE extends Application {
     }
 
     private void promptNewDataFile() {
-        TextInputDialog d = new TextInputDialog("INPUT" + (dataFiles.size() + 1));
+        TextInputDialog d = new TextInputDialog("INPUT " + (dataFiles.size() + 1));
         d.setTitle("New Input File");
         d.setHeaderText(null);
         d.setContentText("File name:");
@@ -289,21 +303,17 @@ public class SimpleIDE extends Application {
         if (selectedDataFile != null) {
             dataFiles.put(selectedDataFile, dataEditor.getText());
         }
-
         consoleArea.clear();
         String codeText = selectedCodeFile != null ? codeFiles.get(selectedCodeFile) : "";
         String dataText = selectedDataFile != null ? dataFiles.get(selectedDataFile) : "";
-
         PrintStream ps = new PrintStream(new OutputStream() {
             @Override
             public void write(int b) {
                 Platform.runLater(() -> consoleArea.appendText(String.valueOf((char) b)));
             }
         });
-
         PrintStream originalOut = System.out;
         PrintStream originalErr = System.err;
-
         try {
             Id.reset();
             System.setOut(ps);
@@ -323,7 +333,6 @@ public class SimpleIDE extends Application {
         if (selectedCodeFile != null) {
             codeFiles.put(selectedCodeFile, codeEditor.getText());
         }
-
         if (selectedCodeFile != null) {
             try {
                 String codeText = codeFiles.get(selectedCodeFile);

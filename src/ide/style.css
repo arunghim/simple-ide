@@ -174,16 +174,20 @@
 }
 
 .tab-label {
+    -fx-background-color: #1a1a1a;
     -fx-text-fill: #a0a0a0;
     -fx-font-size: 11px;
-    -fx-padding: 6 12 6 12;
-    -fx-background-color: transparent;
+    -fx-font-weight: 600;
+    -fx-padding: 8 12 8 12;
+    -fx-border-color: #2a2a2a;
+    -fx-border-width: 1 0 0 0;
     -fx-background-radius: 0;
 }
 
 .light-theme .tab-label {
+    -fx-background-color: #e0e0e0;
     -fx-text-fill: #5a5a5a;
-    -fx-background-radius: 0;
+    -fx-border-color: #d0d0d0;
 }
 
 .editor-area {
