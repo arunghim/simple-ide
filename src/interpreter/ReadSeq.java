@@ -46,12 +46,14 @@ public class ReadSeq implements ICore {
 
     @Override
     public void print(int indent) {
-        read.print(indent);
-        if (hasReadSeq) {
+        read.print(0);
+        ReadSeq current = readSeq;
+        while (current != null && current.read != null) {
             parser.out().print(", ");
-            readSeq.print(indent);
-        } else {
-            parser.out().println(";");
+            current.read.print(0);
+            current = current.readSeq;
         }
+
+        parser.out().println(";");
     }
 }
