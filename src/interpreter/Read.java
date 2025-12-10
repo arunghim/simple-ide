@@ -42,6 +42,7 @@ public class Read implements ICore {
 
     @Override
     public void print(int indent) {
-        parser.out().print("read " + idName + ";");
+        String indentation = " ".repeat(indent);
+        parser.out().print(indentation + idName);
     }
 }
