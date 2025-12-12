@@ -54,4 +54,12 @@ public class Assign implements ICore {
         expr.print(0);
         parser.out().println(";");
     }
+
+    public String getIdName() {
+        return idName;
+    }
+
+    public Expr getExpr() {
+        return expr;
+    }
 }
