@@ -167,7 +167,6 @@ public class SimpleIDE extends Application {
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         stage.setScene(scene);
-        stage.setTitle("MINIMAL IDE");
         stage.setMinWidth(900);
         stage.setMinHeight(600);
 
