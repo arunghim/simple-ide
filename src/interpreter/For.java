@@ -62,10 +62,15 @@ public class For implements ICore {
         String indentation = " ".repeat(indent);
 
         parser.out().print(indentation + "for (");
-        firstAssign.print(0);
+        parser.out().print(firstAssign.getIdName() + " = ");
+        firstAssign.getExpr().print(0);
+        parser.out().print("; ");
         cond.print(0);
-        parser.out().println(")");
+        parser.out().print("; ");
+        parser.out().print(secondAssign.getIdName() + " = ");
+        secondAssign.getExpr().print(0);
+        parser.out().print(") loop");
         stmtSeq.print(indent + 2);
-        parser.out().println(indentation + "end;");
+        parser.out().print(indentation + "end;");
     }
 }

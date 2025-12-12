@@ -6,13 +6,12 @@ public class Read implements ICore {
     private final Scanner input;
     private final Tokenizer tokenizer;
     private final Parser parser;
-
     private String idName;
 
     public Read(Tokenizer tokenizer, Parser parser) {
         this.tokenizer = tokenizer;
         this.parser = parser;
-        this.input = new Scanner(parser.data());
+        this.input = parser.inputScanner();
     }
 
     @Override
@@ -30,19 +29,19 @@ public class Read implements ICore {
         if (!input.hasNextLine()) throw new RuntimeException("ERROR: NO MORE LINES IN THE INPUT");
         String currentLine = input.nextLine().trim();
 
+        int value;
         try {
-            int value = Integer.parseInt(currentLine);
-            idManager.setValue(idName, value);
+            value = Integer.parseInt(currentLine);
         } catch (NumberFormatException e) {
             throw new RuntimeException("ERROR: EXPECTED INTEGER VALUE FOR '" + idName + "' BUT GOT '" + currentLine + "'", e);
         }
 
+        idManager.setValue(idName, value);
         return 0;
     }
 
     @Override
     public void print(int indent) {
-        String indentation = " ".repeat(indent);
-        parser.out().print(indentation + idName);
+        parser.out().print(" ".repeat(indent) + idName);
     }
 }
